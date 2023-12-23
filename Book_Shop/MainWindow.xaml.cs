@@ -21,7 +21,7 @@ namespace Book_Shop
     public partial class MainWindow : Window
     {
         private static string databaseName = "BookBase";
-        private static string databasePassword = "050512ok";
+        private static string databasePassword = "";
         private string databaseParams = $"Host=localhost;Username=postgres;Password={databasePassword};Database={databaseName};";
 
         private User currentUser;
