@@ -21,7 +21,7 @@ namespace Book_Shop
     public partial class MainWindow : Window
     {
         private static string databaseName = "BookBase";
-        private static string databasePassword = "050512ok";
+        private static string databasePassword = "160950";
         private string databaseParams = $"Host=localhost;Username=postgres;Password={databasePassword};Database={databaseName};";
 
         private User currentUser;
@@ -403,6 +403,13 @@ namespace Book_Shop
         private void AddBookClick(object sender, RoutedEventArgs e)
         {
             ShowEditBookWindow(null, false);
+        }
+
+        private void LogoutClick(object sender, RoutedEventArgs e)
+        {
+            UsernameInput.Text = null;
+            PasswordInput.Text = null;
+            ShowAuthWindow();
         }
     }
 }
