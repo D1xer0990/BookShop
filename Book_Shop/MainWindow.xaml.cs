@@ -122,7 +122,7 @@ namespace Book_Shop
             {
                 conn.Open();
 
-                var query = "SELECT name, author, publisher, genre, releaseDate, pagesCount, totalPrice, costPrice, isSequel FROM booksData";
+                var query = "SELECT name, author, publisher, genre, releaseDate, pagesCount, totalPrice, costPrice, isSequel FROM booksdata";
 
                 using (var cmd = new NpgsqlCommand(query, conn))
                 {
