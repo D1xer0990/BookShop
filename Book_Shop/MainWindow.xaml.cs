@@ -73,7 +73,7 @@ namespace Book_Shop
                             };
 
                             books = GetBooks();
-
+                            UpdateBooksList(books);
                             ShowBooksWindow();
                         }
                         else
@@ -135,6 +135,17 @@ namespace Book_Shop
             return result;
         }
 
+        public void UpdateBooksList(List<Book> updateBooks)
+        {
+            booksList.Children.Clear();
+            foreach(var book in updateBooks)
+            {
+                Label test = new Label();
+                test.Content = book.name;
+                test.Margin = new Thickness(0,0,0,5);
+                booksList.Children.Add(test);
+            }
+        }
 
         private void OnLoginClick(object sender, RoutedEventArgs e)
         {
@@ -143,6 +154,17 @@ namespace Book_Shop
         }
 
         private void SearchBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (SearchInput.Text.Length >= 3)
+                UpdateBooksList(Search(SearchInput.Text));
+        }
+
+        private void CatalogBtnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewBooksClick(object sender, RoutedEventArgs e)
         {
 
         }
