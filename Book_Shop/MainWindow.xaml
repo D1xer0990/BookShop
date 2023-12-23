@@ -12,18 +12,26 @@
     </Window.Resources>
 
     <Grid x:Name="App">
-        <Grid x:Name="AuthWindow" d:IsHidden="True">
+        <Grid x:Name="AuthWindow">
             <Grid x:Name="AuthPanel" Width="262" Height="289">
                 <Rectangle Fill="#FF23272A" RadiusX="10" RadiusY="10"/>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
                     <Image Height="63" Width="98" Source="/Group 1.png" Margin="0,0,0,20" VerticalAlignment="Top" />
                     <ui:TextBox ClearButtonEnabled="False" PlaceholderText="Username..." x:Name="UsernameInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,6" />
                     <ui:PasswordBox ClearButtonEnabled="False" PlaceholderText="Password..." x:Name="PasswordInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,6"/>
-                    <ui:Button x:Name="LoginBtn" Content="LOG IN" HorizontalAlignment="Stretch" Width="180" Height="40" Click="OnLoginClick"/>
+                    <Grid Width="180" Height="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ui:Button x:Name="LoginBtn" Content="LOG IN" HorizontalAlignment="Stretch" Click="OnLoginClick" Height="40" Margin="0,0,4,0"/>
+                        <ui:Button x:Name="RegBtn" Grid.Column="1" HorizontalAlignment="Stretch" Icon="PeopleAdd28" IconFilled="True" Height="40"/>
+                        
+                    </Grid>
                 </StackPanel>
             </Grid>
         </Grid>
-        <Grid x:Name="BooksWindow">
+        <Grid x:Name="BooksWindow" d:IsHidden="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
