@@ -49,7 +49,23 @@
                     <ui:Button Icon="Search48" IconFilled="True" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="1" Click="SearchBtnClick"/>
                 </Grid>
                 <ScrollViewer Margin="0,40,0,0">
-                    <StackPanel x:Name="booksList"/>
+                    <StackPanel x:Name="booksList">
+                        <ui:CardExpander Header="Название книги" VerticalAlignment="Top">
+                            <Grid>
+                                <StackPanel>
+                                    <Label Content="Автор" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                                    <Label Content="Издатель" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                                    <Label Content="Количество страниц" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                                    <Label Content="Жанр" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                                    <Label Content="Год издания" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                                    <Label Content="Себестоимость" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                                    <Label Content="Цена для продажи" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                                    <Label Content="Сиквел" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                                    
+                                </StackPanel>
+                            </Grid>
+                        </ui:CardExpander>
+                    </StackPanel>
                 </ScrollViewer>
             </Grid>
         </Grid>
