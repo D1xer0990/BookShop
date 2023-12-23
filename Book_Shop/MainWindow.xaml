@@ -6,13 +6,13 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:local="clr-namespace:Book_Shop"
         mc:Ignorable="d"
-        Title="BookShop" Height="450" Width="800" Icon="/inc.png" Background="#FF2C2F33" MinWidth="800" MinHeight="450">
+        Title="BookShop" Height="500" Width="850" Icon="/inc.png" Background="#FF2C2F33" MinWidth="850" MinHeight="500">
     <Window.Resources>
         
     </Window.Resources>
 
     <Grid x:Name="App">
-        <Grid x:Name="AuthWindow">
+        <Grid x:Name="AuthWindow" d:IsHidden="True">
             <Grid x:Name="AuthPanel" Width="262" Height="289">
                 <Rectangle Fill="#FF23272A" RadiusX="10" RadiusY="10"/>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
@@ -30,7 +30,7 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <Grid x:Name="BooksWindow" d:IsHidden="True">
+        <Grid x:Name="BooksWindow">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -58,6 +58,28 @@
                 <ScrollViewer Margin="0,40,0,0">
                     <StackPanel x:Name="booksList"/>
                 </ScrollViewer>
+                <ui:Button x:Name="AddBookButton"  Icon="Add28" IconFilled="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,10" Click="AddBookClick" Background="#FF141719"/>
+            </Grid>
+        </Grid>
+        <Grid x:Name="EditBook" d:IsHidden="True">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+                <Rectangle Fill="#FF23272A" RadiusX="10" RadiusY="10"/>
+                <StackPanel Margin="15,15,15,15">
+                    <Label x:Name="EditBookLabel" Content="Изменение книги" Margin="0,0,0,4" FontSize="16"/>
+                    <ui:TextBox PlaceholderText="Название..." x:Name="EditBookName" Margin="0,0,0,8"/>
+                    <ui:TextBox PlaceholderText="Автор..." x:Name="EditBookAuthor" Margin="0,0,0,8"/>
+                    <ui:TextBox PlaceholderText="Издатель..." x:Name="EditBookPublisher" Margin="0,0,0,8"/>
+                    <DatePicker x:Name="EditBookDate" Margin="0,0,0,8"/>
+                    <ui:TextBox PlaceholderText="Жанр..." x:Name="EditBookGenre" Margin="0,0,0,8"/>
+                    <ui:TextBox PlaceholderText="Количество страниц..." x:Name="EditBookPagesCount" Margin="0,0,0,8"/>
+                    <ui:TextBox PlaceholderText="Цена..." x:Name="EditBookTotalPrice" Margin="0,0,0,8"/>
+                    <ui:TextBox PlaceholderText="Себистоимость..." x:Name="EditBookCostPrice" Margin="0,0,0,8"/>
+                    <ui:ToggleSwitch x:Name="EditBookSiquel"  Content="Сиквел" Margin="0,0,0,8"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <ui:Button Content="Назад" Margin="0,0,4,0" Click="CloseEditWindowClick"/>
+                        <ui:Button Content="Готово" Margin="4,0,0,0" Click="AddOrEditBook"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
         </Grid>
     </Grid>

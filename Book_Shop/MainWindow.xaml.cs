@@ -21,7 +21,7 @@ namespace Book_Shop
     public partial class MainWindow : Window
     {
         private static string databaseName = "BookBase";
-        private static string databasePassword = "";
+        private static string databasePassword = "050512ok";
         private string databaseParams = $"Host=localhost;Username=postgres;Password={databasePassword};Database={databaseName};";
 
         private User currentUser;
@@ -36,13 +36,49 @@ namespace Book_Shop
         private void ShowAuthWindow()
         {
             BooksWindow.Visibility = Visibility.Hidden;
+            EditBook.Visibility = Visibility.Hidden;
             AuthWindow.Visibility = Visibility.Visible;
         }
 
         private void ShowBooksWindow()
         {
+            EditBook.Visibility = Visibility.Hidden;
             AuthWindow.Visibility = Visibility.Hidden;
             BooksWindow.Visibility = Visibility.Visible;
+        }
+
+        private void ShowEditBookWindow(Book book, bool isEdit)
+        {
+            if(isEdit)
+            {
+                EditBookLabel.Content = "Изменение книги";
+                EditBookAuthor.Text = book.author;
+                EditBookGenre.Text = book.genre;
+                EditBookName.Text = book.name;
+                EditBookPublisher.Text = book.publisher;
+                EditBookPagesCount.Text = book.pagesCount.ToString();
+                EditBookCostPrice.Text = book.costPrice.ToString();
+                EditBookTotalPrice.Text = book.totalPrice.ToString();
+                EditBookDate.SelectedDate = book.releaseDate;
+                EditBookSiquel.IsChecked = book.isSequel;
+            }
+            else
+            {
+                EditBookLabel.Content = "Добавление книги";
+                EditBookAuthor.Text = null;
+                EditBookGenre.Text = null;
+                EditBookName.Text = null;
+                EditBookPublisher.Text = null;
+                EditBookPagesCount.Text = null;
+                EditBookCostPrice.Text = null;
+                EditBookTotalPrice.Text = null;
+                EditBookDate.SelectedDate = null;
+                EditBookSiquel.IsChecked = null;
+            }
+
+            BooksWindow.Visibility = Visibility.Hidden;
+            AuthWindow.Visibility = Visibility.Hidden;
+            EditBook.Visibility = Visibility.Visible;
         }
 
         private void Login(string username, string password)
@@ -69,6 +105,8 @@ namespace Book_Shop
                                 Password = reader["password"].ToString(),
                                 isAdmin = Convert.ToBoolean(reader["isadmin"])
                             };
+
+                            AddBookButton.Visibility = currentUser.isAdmin ? Visibility.Visible : Visibility.Collapsed;
 
                             books = GetBooks();
                             UpdateBooksList(books);
@@ -148,7 +186,54 @@ namespace Book_Shop
                 }
             }
 
+            books = books.OrderBy(b => b.name).ToList();
+
             return books;
+        }
+
+        public void UpdateOrAddBook(string name, string author, string publisher, string genre, DateTime releaseDate, int pagesCount, double totalPrice, double costPrice, bool isSequel)
+        {
+            using (var connection = new NpgsqlConnection(databaseParams))
+            {
+                connection.Open();
+
+                using (var command = new NpgsqlCommand())
+                {
+                    command.Connection = connection;
+
+                    command.CommandText = "SELECT COUNT(*) FROM booksdata WHERE name = @Name AND author = @Author";
+                    command.Parameters.AddWithValue("@Name", name);
+                    command.Parameters.AddWithValue("@Author", author);
+
+                    int existingCount = Convert.ToInt32(command.ExecuteScalar());
+
+                    if (existingCount > 0)
+                    {
+                        command.CommandText = @"UPDATE booksdata SET publisher = @Publisher, genre = @Genre, releaseDate = @ReleaseDate, 
+                                            pagesCount = @PagesCount, totalPrice = @TotalPrice, costPrice = @CostPrice, isSequel = @IsSequel 
+                                            WHERE name = @Name AND author = @Author";
+                    }
+                    else
+                    {
+                        command.CommandText = @"INSERT INTO booksdata(name, author, publisher, genre, releaseDate, pagesCount, totalPrice, costPrice, isSequel) 
+                                            VALUES (@Name, @Author, @Publisher, @Genre, @ReleaseDate, @PagesCount, @TotalPrice, @CostPrice, @IsSequel)";
+                    }
+
+                    command.Parameters.AddWithValue("@Publisher", publisher);
+                    command.Parameters.AddWithValue("@Genre", genre);
+                    command.Parameters.AddWithValue("@ReleaseDate", releaseDate);
+                    command.Parameters.AddWithValue("@PagesCount", pagesCount);
+                    command.Parameters.AddWithValue("@TotalPrice", totalPrice);
+                    command.Parameters.AddWithValue("@CostPrice", costPrice);
+                    command.Parameters.AddWithValue("@IsSequel", isSequel);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            books = GetBooks();
+            UpdateBooksList(books);
+            ShowBooksWindow();
         }
 
         private List<Book> Search(string data)
@@ -190,9 +275,54 @@ namespace Book_Shop
                     stackPanel.Children.Add(label);
                 }
 
+                if (currentUser.isAdmin)
+                {
+                    var stackPanel2 = new StackPanel();
+                    stackPanel2.Orientation = Orientation.Horizontal;
+                    Wpf.Ui.Controls.Button edit = new Wpf.Ui.Controls.Button();
+                    edit.Content = "Изменить";
+
+                    edit.Margin = new Thickness(0, 0, 6, 0);
+                    edit.Click += (sender, e) =>
+                    {
+                        ShowEditBookWindow(book, true);
+                    };
+                    stackPanel2.Children.Add(edit);
+
+                    Wpf.Ui.Controls.Button remove = new Wpf.Ui.Controls.Button();
+                    remove.Content = "Удалить";
+                    remove.Click += (sender, e) =>
+                    {
+                        DeleteBookByName(book.name);
+                        booksList.Children.Remove(cardExpander);
+                        books.Remove(book);
+                    };
+
+                    stackPanel2.Children.Add(remove);
+
+                    stackPanel.Children.Add(stackPanel2);
+                }
+
                 grid.Children.Add(stackPanel);
                 cardExpander.Content = grid;
                 booksList.Children.Add(cardExpander);
+            }
+        }
+
+        public void DeleteBookByName(string bookName)
+        {
+            using (var conn = new NpgsqlConnection(databaseParams))
+            {
+                conn.Open();
+
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = "DELETE FROM booksdata WHERE name = @bookName";
+                    cmd.Parameters.AddWithValue("bookName", bookName);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                }
             }
         }
 
@@ -253,6 +383,26 @@ namespace Book_Shop
 
                 UpdateBooksList(randomBooks);
             }
+        }
+
+        private void CloseEditWindowClick(object sender, RoutedEventArgs e)
+        {
+            ShowBooksWindow();
+        }
+
+        private void AddOrEditBook(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (EditBookName.Text != null && EditBookAuthor.Text != null && EditBookPublisher.Text != null && EditBookGenre.Text != null && DateTime.TryParse(EditBookDate.Text, out DateTime selectedDate) && int.TryParse(EditBookPagesCount.Text, out int pageCount) && double.TryParse(EditBookTotalPrice.Text, out double totalPrice) && double.TryParse(EditBookCostPrice.Text, out double costPrice) && EditBookSiquel.IsChecked != null)
+                    UpdateOrAddBook(EditBookName.Text, EditBookAuthor.Text, EditBookPublisher.Text, EditBookGenre.Text, EditBookDate.SelectedDate ?? DateTime.MinValue, Int32.Parse(EditBookPagesCount.Text), Double.Parse(EditBookTotalPrice.Text), Double.Parse(EditBookCostPrice.Text), EditBookSiquel.IsChecked ?? false);
+            }
+            catch { }
+        }
+
+        private void AddBookClick(object sender, RoutedEventArgs e)
+        {
+            ShowEditBookWindow(null, false);
         }
     }
 }
