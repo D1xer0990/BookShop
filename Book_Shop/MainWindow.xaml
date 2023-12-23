@@ -23,5 +23,6 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        <Grid x:Name="MainWindow"/>
     </Grid>
 </Window>
