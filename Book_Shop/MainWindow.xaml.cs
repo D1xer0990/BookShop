@@ -26,9 +26,22 @@ namespace Book_Shop
         public MainWindow()
         {
             InitializeComponent();
+            ShowAuthWindow();
         }
 
-        public void Login(string username, string password)
+        private void ShowAuthWindow()
+        {
+            BooksWindow.Visibility = Visibility.Hidden;
+            AuthWindow.Visibility = Visibility.Visible;
+        }
+
+        private void ShowBooksWindow()
+        {
+            AuthWindow.Visibility = Visibility.Hidden;
+            BooksWindow.Visibility = Visibility.Visible;
+        }
+
+        private void Login(string username, string password)
         {
             string sql = "SELECT COUNT(*) FROM users WHERE username = @username AND password = @password";
 
@@ -45,7 +58,7 @@ namespace Book_Shop
                     if (count > 0)
                     {
                         Console.WriteLine("Authentication successful!");
-                        //При успешной авторизации
+                        ShowBooksWindow();
                     }
                     else
                     {

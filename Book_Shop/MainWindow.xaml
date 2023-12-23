@@ -23,6 +23,6 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <Grid x:Name="MainWindow"/>
+        <Grid x:Name="BooksWindow"/>
     </Grid>
 </Window>
