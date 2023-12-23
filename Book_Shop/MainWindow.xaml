@@ -45,7 +45,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <ui:TextBox x:Name="SearchInput" PlaceholderText="Поиск..."/>
-                    <ui:Button Icon="Search48" IconFilled="True" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="1"/>
+                    <ui:Button Icon="Search48" IconFilled="True" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="1" Click="SearchBtnClick"/>
                 </Grid>
                 <ScrollViewer Margin="0,40,0,0">
                     <StackPanel x:Name="booksList"/>

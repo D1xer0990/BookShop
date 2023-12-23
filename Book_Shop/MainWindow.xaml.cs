@@ -141,5 +141,10 @@ namespace Book_Shop
             if (UsernameInput.Text.Length > 3 && PasswordInput.Text.Length > 3)
                 Login(UsernameInput.Text, PasswordInput.Password);
         }
+
+        private void SearchBtnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
