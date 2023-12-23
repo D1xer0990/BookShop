@@ -62,8 +62,6 @@ namespace Book_Shop
                     {
                         if (reader.Read())
                         {
-                            Console.WriteLine("Authentication successful!");
-
                             currentUser = new User()
                             {
                                 Id = Convert.ToInt32(reader["id"]),
@@ -78,14 +76,45 @@ namespace Book_Shop
                         }
                         else
                         {
-                            Console.WriteLine("Authentication failed. Invalid username or password.");
+                            MessageBox.Show("Неверное имя или пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
             }
         }
 
-        public List<Book> GetBooks()
+        private void Register(string username, string password)
+        {
+            using (var connection = new NpgsqlConnection(databaseParams))
+            {
+                connection.Open();
+
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT COUNT(*) FROM users WHERE username = @username";
+                    cmd.Parameters.AddWithValue("username", username);
+
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    if (count > 0)
+                    {
+                        MessageBox.Show("Имя занято.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    cmd.CommandText = "INSERT INTO users (username, password) VALUES (@username, @password)";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("username", username);
+                    cmd.Parameters.AddWithValue("password", password);
+                    cmd.Parameters.AddWithValue("isadmin", false);
+                    cmd.ExecuteNonQuery();
+                    Login(username, password);
+                }
+            }
+        }
+
+        private List<Book> GetBooks()
         {
             List<Book> books = new List<Book>();
 
@@ -122,7 +151,7 @@ namespace Book_Shop
             return books;
         }
 
-        public List<Book> Search(string data)
+        private List<Book> Search(string data)
         {
             string searchData = data.ToLower();
 
@@ -135,7 +164,7 @@ namespace Book_Shop
             return result;
         }
 
-        public void UpdateBooksList(List<Book> updateBooks)
+        private void UpdateBooksList(List<Book> updateBooks)
         {
             booksList.Children.Clear();
             foreach (var book in updateBooks)
@@ -171,6 +200,12 @@ namespace Book_Shop
         {
             if (UsernameInput.Text.Length > 3 && PasswordInput.Text.Length > 3)
                 Login(UsernameInput.Text, PasswordInput.Password);
+        }
+
+        private void OnRegisterClick(object sender, RoutedEventArgs e)
+        {
+            if (UsernameInput.Text.Length > 3 && PasswordInput.Text.Length > 3)
+                Register(UsernameInput.Text, PasswordInput.Password);
         }
 
         private void SearchBtnClick(object sender, RoutedEventArgs e)
