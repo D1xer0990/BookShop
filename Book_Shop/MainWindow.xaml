@@ -31,13 +31,13 @@
             <StackPanel Margin="10,10,20,0">
                 <ui:Button Content="Каталог" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="CatalogBtnClick"/>
                 <ui:Button Content="Новинки" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="NewBooksClick"/>
-                <ui:Button Content="Популярные книги" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
-                <ui:Button Content="Популярные авторы" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
-                <ui:Button Content="Популярные Жанры" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
-                <ui:Button Content="Итоги дня" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
-                <ui:Button Content="Итоги Недели" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
-                <ui:Button Content="Итоги Месяца" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
-                <ui:Button Content="Итоги года" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
+                <ui:Button Content="Популярные книги" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="RandomBook"/>
+                <ui:Button Content="Популярные авторы" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="RandomBook"/>
+                <ui:Button Content="Популярные Жанры" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="RandomBook"/>
+                <ui:Button Content="Итоги дня" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="RandomBook"/>
+                <ui:Button Content="Итоги Недели" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="RandomBook"/>
+                <ui:Button Content="Итоги Месяца" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="RandomBook"/>
+                <ui:Button Content="Итоги года" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="RandomBook"/>
             </StackPanel>
             <Grid Grid.Column="1" Margin="0,10,10,0">
                 <Grid VerticalAlignment="Top" Margin="0,0,15,0">

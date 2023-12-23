@@ -196,5 +196,28 @@ namespace Book_Shop
 
             UpdateBooksList(newBooks);
         }
+
+        Wpf.Ui.Controls.Button previousSender;
+        private void RandomBook(object sender, RoutedEventArgs e)
+        {
+            if (previousSender != (Wpf.Ui.Controls.Button)sender)
+            {
+                previousSender = (Wpf.Ui.Controls.Button)sender;
+                Random random = new Random();
+                List<Book> randomBooks = new List<Book>();
+
+                foreach (var book in books)
+                {
+                    bool a = random.Next(0, 2) == 1;
+
+                    if (a)
+                    {
+                        randomBooks.Add(book);
+                    }
+                }
+
+                UpdateBooksList(randomBooks);
+            }
+        }
     }
 }
