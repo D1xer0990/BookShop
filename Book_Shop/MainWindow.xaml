@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Book_Shop"
         mc:Ignorable="d"
-        Title="BookShop" Height="450" Width="800" Icon="/inc.png">
+        Title="BookShop" Height="450" Width="800" Icon="/inc.png" Background="#FF2C2F33">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -71,17 +71,21 @@
         </Style>
     </Window.Resources>
 
-    <Grid x:Name="Grid" OpacityMask="Black" Background="#FF2C2F33">
-        <Rectangle HorizontalAlignment="Center" Height="289" VerticalAlignment="Center" Width="262" Fill="#FF23272A" RadiusX="10" RadiusY="10"/>
-        <TextBox x:Name="TexBox_Username" HorizontalAlignment="Center" TextWrapping="Wrap" Width="180" Height="35" Margin="0,184,0,0" Background="#FFD9D9D9" Text="Username..." SelectionBrush="{x:Null}"/>
-        <Button x:Name="Button_LogIn" Content="LOG IN"
-                HorizontalAlignment="Center"
-                Margin="0,289,0,0"
+    <Grid x:Name="App">
+        <Grid x:Name="AuthWindow">
+            <Grid x:Name="AuthPanel" Width="262" Height="289">
+                <Rectangle Fill="#FF23272A" RadiusX="10" RadiusY="10"/>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
+                    <Image Height="63" Width="98" Source="/Group 1.png" Margin="0,0,0,20" VerticalAlignment="Top" />
+                    <TextBox x:Name="UsernameInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="180" Height="35" Margin="0,0,0,6" Background="#FFD9D9D9" Text="Username..." SelectionBrush="{x:Null}"/>
+                    <TextBox x:Name="PasswordInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="180" Height="35" Background="#FFD9D9D9" SelectionBrush="{x:Null}" Margin="0,0,0,6" Text="Password..."/>
+                    <Button x:Name="LoginBtn" Content="LOG IN"
                 VerticalAlignment="Top"
                 Width="180"
                 Height="38"
                 Style="{StaticResource ButtonStyle}"/>
-        <Image HorizontalAlignment="Center" Height="63" VerticalAlignment="Top" Width="98" Source="/Group 1.png" Margin="0,92,0,0" />
-        <TextBox x:Name="TexBox_Password" HorizontalAlignment="Center" TextWrapping="Wrap" Width="180" Height="35" Background="#FFD9D9D9" SelectionBrush="{x:Null}" Margin="0,226,0,0" Text="Password..."/>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
