@@ -68,5 +68,11 @@ namespace Book_Shop
                 }
             }
         }
+
+        private void OnLoginClick(object sender, RoutedEventArgs e)
+        {
+            if (UsernameInput.Text.Length > 3 && PasswordInput.Text.Length > 3)
+                Login(UsernameInput.Text, PasswordInput.Password);
+        }
     }
 }

@@ -19,7 +19,7 @@
                     <Image Height="63" Width="98" Source="/Group 1.png" Margin="0,0,0,20" VerticalAlignment="Top" />
                     <ui:TextBox ClearButtonEnabled="False" PlaceholderText="Username..." x:Name="UsernameInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,6" />
                     <ui:PasswordBox ClearButtonEnabled="False" PlaceholderText="Password..." x:Name="PasswordInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,6"/>
-                    <ui:Button x:Name="LoginBtn" Content="LOG IN" HorizontalAlignment="Stretch" Width="180" Height="40"/>
+                    <ui:Button x:Name="LoginBtn" Content="LOG IN" HorizontalAlignment="Stretch" Width="180" Height="40" Click="OnLoginClick"/>
                 </StackPanel>
             </Grid>
         </Grid>
