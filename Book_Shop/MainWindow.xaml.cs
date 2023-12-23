@@ -22,7 +22,9 @@ namespace Book_Shop
         private static string databaseName = "BookBase";
         private static string databasePassword = "050512ok";
         private string databaseParams = $"Host=localhost;Username=postgres;Password={databasePassword};Database={databaseName};";
-        
+
+        private User currentUser;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,7 +45,7 @@ namespace Book_Shop
 
         private void Login(string username, string password)
         {
-            string sql = "SELECT COUNT(*) FROM users WHERE username = @username AND password = @password";
+            string sql = "SELECT id, username, password, isadmin FROM users WHERE username = @username AND password = @password";
 
             using (var conn = new NpgsqlConnection(databaseParams))
             {
@@ -54,16 +56,26 @@ namespace Book_Shop
                     cmd.Parameters.AddWithValue("username", username);
                     cmd.Parameters.AddWithValue("password", password);
 
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    if (count > 0)
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        Console.WriteLine("Authentication successful!");
-                        ShowBooksWindow();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Authentication failed. Invalid username or password.");
-                        //При не успешной авторизации
+                        if (reader.Read())
+                        {
+                            Console.WriteLine("Authentication successful!");
+
+                            currentUser = new User()
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                Username = reader["username"].ToString(),
+                                Password = reader["password"].ToString(),
+                                isAdmin = Convert.ToBoolean(reader["isadmin"])
+                            };
+
+                            ShowBooksWindow();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Authentication failed. Invalid username or password.");
+                        }
                     }
                 }
             }
