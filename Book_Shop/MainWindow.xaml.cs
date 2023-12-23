@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Book_Shop
         private string databaseParams = $"Host=localhost;Username=postgres;Password={databasePassword};Database={databaseName};";
 
         private User currentUser;
+        private List<Book> books;
 
         public MainWindow()
         {
@@ -70,6 +72,8 @@ namespace Book_Shop
                                 isAdmin = Convert.ToBoolean(reader["isadmin"])
                             };
 
+                            books = GetBooks();
+
                             ShowBooksWindow();
                         }
                         else
@@ -80,6 +84,57 @@ namespace Book_Shop
                 }
             }
         }
+
+        public List<Book> GetBooks()
+        {
+            List<Book> books = new List<Book>();
+
+            using (var conn = new NpgsqlConnection(databaseParams))
+            {
+                conn.Open();
+
+                var query = "SELECT name, author, publisher, genre, releaseDate, pagesCount, totalPrice, costPrice, isSequel FROM booksData";
+
+                using (var cmd = new NpgsqlCommand(query, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Book book = new Book
+                            {
+                                name = reader["name"].ToString(),
+                                author = reader["author"].ToString(),
+                                publisher = reader["publisher"].ToString(),
+                                genre = reader["genre"].ToString(),
+                                releaseDate = Convert.ToDateTime(reader["releasedate"]),
+                                pagesCount = Convert.ToInt32(reader["pagescount"]),
+                                totalPrice = (double)Convert.ToDecimal(reader["totalprice"]),
+                                costPrice = (double)Convert.ToDecimal(reader["costprice"]),
+                                isSequel = Convert.ToBoolean(reader["issequel"])
+                            };
+                            books.Add(book);
+                        }
+                    }
+                }
+            }
+
+            return books;
+        }
+
+        public List<Book> Search(string data)
+        {
+            string searchData = data.ToLower();
+
+            var result = books.FindAll(book =>
+                book.genre.ToLower().Contains(searchData) ||
+                book.author.ToLower().Contains(searchData) ||
+                book.name.ToLower().Contains(searchData)
+            );
+
+            return result;
+        }
+
 
         private void OnLoginClick(object sender, RoutedEventArgs e)
         {
