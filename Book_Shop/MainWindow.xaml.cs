@@ -138,12 +138,32 @@ namespace Book_Shop
         public void UpdateBooksList(List<Book> updateBooks)
         {
             booksList.Children.Clear();
-            foreach(var book in updateBooks)
+            foreach (var book in updateBooks)
             {
-                Label test = new Label();
-                test.Content = book.name;
-                test.Margin = new Thickness(0,0,0,5);
-                booksList.Children.Add(test);
+                var cardExpander = new Wpf.Ui.Controls.CardExpander();
+                cardExpander.Header = book.name;
+                cardExpander.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                cardExpander.Margin = new Thickness(0, 6, 0, 0);
+
+                var grid = new Grid();
+
+                var stackPanel = new StackPanel();
+
+                string[] labelsContent = { $"Автор: {book.author}", $"Издатель: {book.publisher}", $"Количество страниц: {book.pagesCount}", $"Жанр: {book.genre}", $"Год издания: {book.releaseDate.Year}", $"Себестоимость: {book.costPrice}р.", $"Цена для продажи: {book.totalPrice}р.", $"Сиквел: {(book.isSequel ? "Да" : "Нет")}" };
+
+                foreach (var content in labelsContent)
+                {
+                    var label = new Label();
+                    label.Content = content;
+                    label.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                    label.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                    label.Margin = new System.Windows.Thickness(0, 0, 0, 4);
+                    stackPanel.Children.Add(label);
+                }
+
+                grid.Children.Add(stackPanel);
+                cardExpander.Content = grid;
+                booksList.Children.Add(cardExpander);
             }
         }
 
@@ -168,7 +188,7 @@ namespace Book_Shop
         {
             List<Book> newBooks = new List<Book>();
 
-            foreach(var book in books)
+            foreach (var book in books)
             {
                 if (book.releaseDate.Year >= 1920)
                     newBooks.Add(book);
