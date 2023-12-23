@@ -47,7 +47,7 @@
                     <ui:TextBox x:Name="SearchInput" PlaceholderText="Поиск..."/>
                     <ui:Button Icon="Search48" IconFilled="True" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="1"/>
                 </Grid>
-                <ScrollViewer>
+                <ScrollViewer Margin="0,40,0,0">
                     <StackPanel x:Name="booksList"/>
                 </ScrollViewer>
             </Grid>
