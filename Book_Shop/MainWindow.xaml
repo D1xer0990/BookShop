@@ -3,72 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:local="clr-namespace:Book_Shop"
         mc:Ignorable="d"
         Title="BookShop" Height="450" Width="800" Icon="/inc.png" Background="#FF2C2F33">
     <Window.Resources>
-        <Style TargetType="TextBox">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Width" Value="120"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#A0A0A0"/>
-            <Setter Property="Background" Value="#F0F0F0"/>
-            <Setter Property="Foreground" Value="#000000"/>
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8
-">
-                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#FF7756BE"/>
-            <Setter Property="Foreground" Value="#FFFDFDFD"/>
-            <Setter Property="BorderBrush" Value="{x:Null}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <EventTrigger RoutedEvent="Button.MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                            To="#FF6347ED"
-                                            Duration="0:0:0.3"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="Button.MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                            To="#FF7756BE"
-                                            Duration="0:0:0.3"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
     </Window.Resources>
 
     <Grid x:Name="App">
@@ -77,13 +17,9 @@
                 <Rectangle Fill="#FF23272A" RadiusX="10" RadiusY="10"/>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
                     <Image Height="63" Width="98" Source="/Group 1.png" Margin="0,0,0,20" VerticalAlignment="Top" />
-                    <TextBox x:Name="UsernameInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="180" Height="35" Margin="0,0,0,6" Background="#FFD9D9D9" Text="Username..." SelectionBrush="{x:Null}"/>
-                    <TextBox x:Name="PasswordInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="180" Height="35" Background="#FFD9D9D9" SelectionBrush="{x:Null}" Margin="0,0,0,6" Text="Password..."/>
-                    <Button x:Name="LoginBtn" Content="LOG IN"
-                VerticalAlignment="Top"
-                Width="180"
-                Height="38"
-                Style="{StaticResource ButtonStyle}"/>
+                    <ui:TextBox ClearButtonEnabled="False" PlaceholderText="Username..." x:Name="UsernameInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,6" />
+                    <ui:PasswordBox ClearButtonEnabled="False" PlaceholderText="Password..." x:Name="PasswordInput" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="0,0,0,6"/>
+                    <ui:Button x:Name="LoginBtn" Content="LOG IN" HorizontalAlignment="Stretch" Width="180" Height="40"/>
                 </StackPanel>
             </Grid>
         </Grid>
