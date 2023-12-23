@@ -30,7 +30,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Margin="10,10,20,0">
                 <ui:Button Content="Каталог" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="CatalogBtnClick"/>
-                <ui:Button Content="Новинки" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
+                <ui:Button Content="Новинки" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6" Click="NewBooksClick"/>
                 <ui:Button Content="Популярные книги" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
                 <ui:Button Content="Популярные авторы" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>
                 <ui:Button Content="Популярные Жанры" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,6"/>

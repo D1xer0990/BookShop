@@ -161,12 +161,20 @@ namespace Book_Shop
 
         private void CatalogBtnClick(object sender, RoutedEventArgs e)
         {
-
+            UpdateBooksList(books);
         }
 
         private void NewBooksClick(object sender, RoutedEventArgs e)
         {
+            List<Book> newBooks = new List<Book>();
 
+            foreach(var book in books)
+            {
+                if (book.releaseDate.Year >= 1920)
+                    newBooks.Add(book);
+            }
+
+            UpdateBooksList(newBooks);
         }
     }
 }
