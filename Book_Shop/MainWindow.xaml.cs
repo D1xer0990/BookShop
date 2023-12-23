@@ -19,9 +19,41 @@ namespace Book_Shop
 {
     public partial class MainWindow : Window
     {
+        private static string databaseName = "BookBase";
+        private static string databasePassword = "050512ok";
+        private string databaseParams = $"Host=localhost;Username=postgres;Password={databasePassword};Database={databaseName};";
+        
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public void Login(string username, string password)
+        {
+            string sql = "SELECT COUNT(*) FROM users WHERE username = @username AND password = @password";
+
+            using (var conn = new NpgsqlConnection(databaseParams))
+            {
+                conn.Open();
+
+                using (var cmd = new NpgsqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("username", username);
+                    cmd.Parameters.AddWithValue("password", password);
+
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (count > 0)
+                    {
+                        Console.WriteLine("Authentication successful!");
+                        //При успешной авторизации
+                    }
+                    else
+                    {
+                        Console.WriteLine("Authentication failed. Invalid username or password.");
+                        //При не успешной авторизации
+                    }
+                }
+            }
         }
     }
 }
